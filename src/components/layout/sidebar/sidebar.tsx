@@ -6,6 +6,7 @@ import { SidebarNavItem } from "./sidebar-nav-item";
 import { SidebarToggle } from "./sidebar-toggle";
 import { useSidebar } from "./sidebar-context";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export function Sidebar() {
   const { isCollapsed } = useSidebar();
@@ -25,9 +26,11 @@ export function Sidebar() {
         )}
       >
         {!isCollapsed && (
-          <span className="text-lg font-semibold tracking-tight truncate">
-            Acme<span className="text-accent">.</span>
-          </span>
+          <Link href="/" className="flex items-center gap-2">
+            <span className="text-lg font-semibold tracking-tight truncate">
+              Mehedi<span className="text-accent">.</span>
+            </span>
+          </Link>
         )}
         <SidebarToggle />
       </div>
