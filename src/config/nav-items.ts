@@ -19,11 +19,23 @@ export interface NavItem {
 
 export const navItems: NavItem[] = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { title: "Islamic Books", href: "/islamic-books", icon: BookOpen },
-  { title: "Book Reviews", href: "/book-reviews", icon: StarCheck },
-  { title: "Islamic Content", href: "/islamic-content", icon: PencilLine },
-  { title: "Islamic Notes", href: "/islamic-notes", icon: NotebookPen },
-  { title: "Important Notes", href: "/important-notes", icon: ShieldAlert },
-  { title: "My Schedules", href: "/my-schedules", icon: AlarmClock },
-  { title: "Settings", href: "/settings", icon: Settings },
+  { title: "Islamic Books", href: "/dashboard/islamic-books", icon: BookOpen },
+  { title: "Book Reviews", href: "/dashboard/book-reviews", icon: StarCheck },
+  {
+    title: "Islamic Content",
+    href: "/dashboard/islamic-content",
+    icon: PencilLine,
+  },
+  {
+    title: "Islamic Notes",
+    href: "/dashboard/islamic-notes",
+    icon: NotebookPen,
+  },
+  {
+    title: "Important Notes",
+    href: "/dashboard/important-notes",
+    icon: ShieldAlert,
+  },
+  { title: "My Schedules", href: "/dashboard/my-schedules", icon: AlarmClock },
+  { title: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
