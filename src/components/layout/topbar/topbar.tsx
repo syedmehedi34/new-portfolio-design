@@ -1,5 +1,6 @@
 // src/components/layout/topbar/topbar.tsx
 import { ThemeToggle } from "./theme-toggle";
+import { UserMenu } from "./user-menu";
 
 export function Topbar() {
   return (
@@ -10,10 +11,7 @@ export function Topbar() {
 
       <div className="flex items-center gap-3">
         <ThemeToggle />
-        {/* এখানে পরে User Avatar / Notification icon যোগ হবে */}
-        <div className="h-9 w-9 rounded-full bg-accent/20 flex items-center justify-center text-sm font-medium text-accent">
-          A
-        </div>
+        <UserMenu />
       </div>
     </header>
   );

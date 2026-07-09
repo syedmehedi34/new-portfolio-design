@@ -2,18 +2,19 @@
 "use client";
 
 import { ThemeProvider } from "./theme-provider";
+import { SessionProvider } from "./session-provider";
 
-// ভবিষ্যতে SessionProvider (Auth.js), QueryClientProvider ইত্যাদি
-// এখানে এসে যোগ হবে - app/layout.tsx touch করা লাগবে না
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
-    >
-      {children}
-    </ThemeProvider>
+    <SessionProvider>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        {children}
+      </ThemeProvider>
+    </SessionProvider>
   );
 }
