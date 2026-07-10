@@ -10,11 +10,13 @@ import {
   AlarmClock,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import type { UserRole } from "@/models/user.model";
 
 export interface NavItem {
   title: string;
   href: string;
   icon: LucideIcon;
+  roles?: UserRole[];
 }
 
 export const navItems: NavItem[] = [
@@ -38,4 +40,10 @@ export const navItems: NavItem[] = [
   },
   { title: "My Schedules", href: "/dashboard/my-schedules", icon: AlarmClock },
   { title: "Settings", href: "/dashboard/settings", icon: Settings },
+  {
+    title: "Admin Panel",
+    href: "/dashboard/admin",
+    icon: Users,
+    roles: ["admin"],
+  },
 ];

@@ -5,11 +5,18 @@ import { navItems } from "@/config/nav-items";
 import { SidebarNavItem } from "./sidebar-nav-item";
 import { SidebarToggle } from "./sidebar-toggle";
 import { useSidebar } from "./sidebar-context";
+import { useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 export function Sidebar() {
   const { isCollapsed } = useSidebar();
+  const { data: session } = useSession();
+  const userRole = session?.user.role;
+
+  const visibleItems = navItems.filter(
+    (item) => !item.roles || (userRole && item.roles.includes(userRole)),
+  );
 
   return (
     <aside
@@ -36,7 +43,7 @@ export function Sidebar() {
       </div>
 
       <nav className="flex-1 space-y-1 px-3 py-4">
-        {navItems.map((item) => (
+        {visibleItems.map((item) => (
           <SidebarNavItem
             key={item.href}
             item={item}

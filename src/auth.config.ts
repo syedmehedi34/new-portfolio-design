@@ -2,6 +2,11 @@
 import type { NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
 
+// Route → allowed roles mapping. Notun admin route add korte shudhu ekhane entry দাও।
+const roleProtectedRoutes: { path: string; roles: string[] }[] = [
+  { path: "/dashboard/admin", roles: ["admin"] },
+];
+
 export default {
   pages: {
     signIn: "/login",
@@ -21,16 +26,25 @@ export default {
         nextUrl.pathname.startsWith("/login") ||
         nextUrl.pathname.startsWith("/register");
 
-      // Protected route e ashte gele logged-in howa lagbe
       if (isProtectedRoute && !isLoggedIn) {
         const redirectUrl = new URL("/login", nextUrl);
         redirectUrl.searchParams.set("callbackUrl", nextUrl.pathname);
         return Response.redirect(redirectUrl);
       }
 
-      // Already logged-in obosthay login/register page e gele dashboard e pathiye dao
       if (isAuthPage && isLoggedIn) {
         return Response.redirect(new URL("/dashboard", nextUrl));
+      }
+
+      // Role-based check
+      if (isLoggedIn) {
+        const matchedRule = roleProtectedRoutes.find((rule) =>
+          nextUrl.pathname.startsWith(rule.path),
+        );
+
+        if (matchedRule && !matchedRule.roles.includes(auth.user.role)) {
+          return Response.redirect(new URL("/unauthorized", nextUrl));
+        }
       }
 
       return true;

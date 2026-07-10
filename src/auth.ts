@@ -22,8 +22,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         await dbConnect();
 
         const user = await User.findOne({ email }).select("+password");
-
-        // User na thakle, ba Google diye account create kora thakle (password nai)
         if (!user || !user.password) return null;
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -34,6 +32,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           name: user.name,
           email: user.email,
           image: user.image,
+          role: user.role, // ← notun addition
         };
       },
     }),
@@ -41,7 +40,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     ...authConfig.callbacks,
     async signIn({ user, account }) {
-      // Google diye login korle DB te user na thakle create kore dao
       if (account?.provider === "google") {
         await dbConnect();
         const existingUser = await User.findOne({ email: user.email });
@@ -52,17 +50,32 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             email: user.email,
             image: user.image,
             provider: "google",
+            // role will get automatically from schema
           });
         }
       }
       return true;
     },
-    async jwt({ token, user }) {
-      if (user) token.id = user.id;
+    async jwt({ token, user, trigger }) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role ?? "user";
+      }
+
+      // Google login e authorize() call hoy na, tai role manually DB theke fetch korte hobe
+      if (!user && trigger === "signIn" && !token.role) {
+        await dbConnect();
+        const dbUser = await User.findOne({ email: token.email });
+        token.role = dbUser?.role ?? "user";
+      }
+
       return token;
     },
     async session({ session, token }) {
-      if (session.user) session.user.id = token.id as string;
+      if (session.user) {
+        session.user.id = token.id;
+        session.user.role = token.role;
+      }
       return session;
     },
   },

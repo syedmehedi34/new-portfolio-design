@@ -1,13 +1,17 @@
 // src/models/user.model.ts
 import { Schema, models, model, Types } from "mongoose";
 
+export const USER_ROLES = ["user", "admin"] as const;
+export type UserRole = (typeof USER_ROLES)[number];
+
 export interface IUser {
   _id: Types.ObjectId;
   name: string;
   email: string;
-  password?: string; // Google diye login kora user er password thakbe na
+  password?: string;
   image?: string;
   provider: "credentials" | "google";
+  role: UserRole;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -29,6 +33,7 @@ const UserSchema = new Schema<IUser>(
       enum: ["credentials", "google"],
       default: "credentials",
     },
+    role: { type: String, enum: USER_ROLES, default: "user" },
   },
   { timestamps: true },
 );
