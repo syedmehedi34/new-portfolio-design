@@ -8,6 +8,7 @@ import {
   PencilLine,
   ShieldAlert,
   AlarmClock,
+  Users,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { UserRole } from "@/models/user.model";
@@ -21,7 +22,7 @@ export interface NavItem {
 
 export const navItems: NavItem[] = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { title: "Islamic Books", href: "/dashboard/islamic-books", icon: BookOpen },
+  { title: "Books", href: "/dashboard/books", icon: BookOpen },
   { title: "Book Reviews", href: "/dashboard/book-reviews", icon: StarCheck },
   {
     title: "Islamic Content",
