@@ -5,6 +5,12 @@ import { READING_STATUS, type ReadingStatus } from "@/lib/constants/book";
 export { READING_STATUS };
 export type { ReadingStatus };
 
+export interface INote {
+  _id: Types.ObjectId;
+  title: string;
+  content: string; // HTML content from the rich text editor
+}
+
 export interface IBook {
   _id: Types.ObjectId;
 
@@ -36,12 +42,17 @@ export interface IBook {
   lastReadDate?: Date;
 
   rating: number;
-  importantNotes: string[];
+  notes: INote[];
   review: string;
 
   createdAt: Date;
   updatedAt: Date;
 }
+
+const NoteSchema = new Schema<INote>({
+  title: { type: String, default: "Untitled Note", trim: true },
+  content: { type: String, default: "" },
+});
 
 const BookSchema = new Schema<IBook>(
   {
@@ -80,7 +91,7 @@ const BookSchema = new Schema<IBook>(
     lastReadDate: { type: Date },
 
     rating: { type: Number, min: 1, max: 10, default: 1 },
-    importantNotes: [{ type: String }],
+    notes: [NoteSchema],
     review: { type: String, default: "" },
   },
   { timestamps: true },

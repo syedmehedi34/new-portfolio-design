@@ -11,8 +11,9 @@ import { BookCard } from "@/components/books/book-card";
 import { BookFormDialog } from "@/components/books/book-form-dialog";
 import { FolderFormDialog } from "@/components/books/folder-form-dialog";
 import { MoveBookDialog } from "@/components/books/move-book-dialog";
+import { NotesModal } from "@/components/books/notes-modal";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
-import type { BookDTO, FolderDTO } from "@/types/book";
+import type { BookDTO, FolderDTO, NoteDTO } from "@/types/book";
 
 type DeleteTarget = {
   type: "book" | "folder";
@@ -44,20 +45,35 @@ export default function BooksPage() {
     open: false,
     book: null,
   });
+  const [notesDialog, setNotesDialog] = useState<{
+    open: boolean;
+    book: BookDTO | null;
+  }>({
+    open: false,
+    book: null,
+  });
   const [deleteTarget, setDeleteTarget] = useState<DeleteTarget>(null);
+
+  const gridClass = "grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5";
+  const listClass = "flex flex-col gap-2";
+  const folderGridClass =
+    "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3";
+  const folderListClass = "flex flex-col gap-2";
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold tracking-tight">লাইব্রেরি</h2>
+        <h2 className="text-2xl font-semibold tracking-tight">Library</h2>
         <p className="mt-1 text-sm text-muted">
-          তোমার সব বই ও নোট এক জায়গায় সাজিয়ে রাখো
+          Keep all your books and notes organized in one place
         </p>
       </div>
 
       <BookToolbar
         viewMode={lib.viewMode}
         onViewModeChange={lib.switchViewMode}
+        displayMode={lib.displayMode}
+        onDisplayModeChange={lib.switchDisplayMode}
         search={lib.search}
         onSearchChange={lib.setSearch}
         statusFilter={lib.statusFilter}
@@ -77,18 +93,26 @@ export default function BooksPage() {
       )}
 
       {lib.isLoading ? (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-          {Array.from({ length: 10 }).map((_, i) => (
+        <div className={lib.displayMode === "grid" ? gridClass : listClass}>
+          {Array.from({ length: 8 }).map((_, i) => (
             <div
               key={i}
-              className="aspect-[3/4] animate-pulse rounded-xl bg-surface"
+              className={
+                lib.displayMode === "grid"
+                  ? "aspect-[3/4] animate-pulse rounded-xl bg-surface"
+                  : "h-20 animate-pulse rounded-xl bg-surface"
+              }
             />
           ))}
         </div>
       ) : (
         <>
           {lib.viewMode === "folder" && lib.folders.length > 0 && (
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div
+              className={
+                lib.displayMode === "grid" ? folderGridClass : folderListClass
+              }
+            >
               {lib.folders.map((folder) => (
                 <FolderCard
                   key={folder._id}
@@ -108,11 +132,12 @@ export default function BooksPage() {
           )}
 
           {lib.books.length > 0 ? (
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+            <div className={lib.displayMode === "grid" ? gridClass : listClass}>
               {lib.books.map((book) => (
                 <BookCard
                   key={book._id}
                   book={book}
+                  view={lib.displayMode}
                   onEdit={() => setBookDialog({ open: true, book })}
                   onDelete={() =>
                     setDeleteTarget({
@@ -122,6 +147,7 @@ export default function BooksPage() {
                     })
                   }
                   onMove={() => setMoveDialog({ open: true, book })}
+                  onNotes={() => setNotesDialog({ open: true, book })}
                   onToggleFavorite={() =>
                     lib.updateBook(book._id, { isFavorite: !book.isFavorite })
                   }
@@ -137,7 +163,7 @@ export default function BooksPage() {
                   <BookOpen size={32} className="text-muted/40" />
                 )}
                 <p className="text-sm text-muted">
-                  এখানে এখনো কিছু নেই। নতুন বই বা ফোল্ডার যোগ করো।
+                  Nothing here yet. Add a new book or folder.
                 </p>
               </div>
             )
@@ -176,18 +202,29 @@ export default function BooksPage() {
         }
       />
 
+      <NotesModal
+        isOpen={notesDialog.open}
+        onClose={() => setNotesDialog({ open: false, book: null })}
+        book={notesDialog.book}
+        onSave={async (notes: Partial<NoteDTO>[]) => {
+          if (notesDialog.book)
+            await lib.updateBook(notesDialog.book._id, { notes });
+        }}
+      />
+
       <ConfirmDialog
         isOpen={!!deleteTarget}
         onClose={() => setDeleteTarget(null)}
         title={
           deleteTarget?.type === "folder"
-            ? "ফোল্ডার ডিলিট করবেন?"
-            : "বই ডিলিট করবেন?"
+            ? "Delete this folder?"
+            : "Delete this book?"
         }
+        confirmLabel="Delete"
         description={
           deleteTarget?.type === "folder"
-            ? `"${deleteTarget?.name}" ডিলিট হলে ভেতরের বই/সাব-ফোল্ডার প্যারেন্ট ফোল্ডারে চলে যাবে।`
-            : `"${deleteTarget?.name}" স্থায়ীভাবে ডিলিট হয়ে যাবে।`
+            ? `"${deleteTarget?.name}" will be removed. Its books and sub-folders will move to the parent folder.`
+            : `"${deleteTarget?.name}" will be permanently deleted.`
         }
         onConfirm={() => {
           if (!deleteTarget) return;

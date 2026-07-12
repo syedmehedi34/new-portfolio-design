@@ -31,7 +31,7 @@ export function MoveBookDialog({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={`"${book.bookName}" কোথায় নিতে চান?`}
+      title={`Move "${book.bookName}"`}
       maxWidth="max-w-sm"
     >
       <div className="flex max-h-80 flex-col gap-1.5 overflow-y-auto">
@@ -40,7 +40,7 @@ export function MoveBookDialog({
           className="flex items-center justify-between rounded-lg border border-border px-3 py-2.5 text-sm transition-colors hover:border-accent/40 hover:bg-accent/5"
         >
           <span className="flex items-center gap-2">
-            <Home size={15} className="text-muted" /> রুট (কোনো ফোল্ডার নেই)
+            <Home size={15} className="text-muted" /> Root (No folder)
           </span>
           {book.folderId === null && (
             <Check size={15} className="text-accent" />

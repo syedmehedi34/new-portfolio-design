@@ -39,7 +39,6 @@ interface FormState {
   endDate: string;
   lastReadDate: string;
   rating: string;
-  importantNotes: string[];
   review: string;
 }
 
@@ -66,11 +65,10 @@ const EMPTY_FORM: FormState = {
   endDate: "",
   lastReadDate: "",
   rating: "1",
-  importantNotes: [],
   review: "",
 };
 
-const TABS = ["মূল তথ্য", "লিংক ও ফাইল", "ট্র্যাকিং", "নোট ও রিভিউ"] as const;
+const TABS = ["Basic Info", "Links & Files", "Tracking", "Review"] as const;
 
 function toDateInput(value?: string) {
   return value ? value.slice(0, 10) : "";
@@ -115,7 +113,6 @@ export function BookFormDialog({
         endDate: toDateInput(book.endDate),
         lastReadDate: toDateInput(book.lastReadDate),
         rating: String(book.rating),
-        importantNotes: book.importantNotes,
         review: book.review,
       });
     } else {
@@ -133,17 +130,17 @@ export function BookFormDialog({
 
     if (!form.bookName.trim()) {
       setTab(TABS[0]);
-      setError("বইয়ের নাম আবশ্যক");
+      setError("Book name is required");
       return;
     }
     if (form.authorName.length === 0) {
       setTab(TABS[0]);
-      setError("অন্তত একজন লেখক দিন");
+      setError("At least one author is required");
       return;
     }
     if (!form.pdfUrl.trim()) {
       setTab(TABS[1]);
-      setError("Google Drive লিংক আবশ্যক");
+      setError("Google Drive link is required");
       return;
     }
 
@@ -172,12 +169,11 @@ export function BookFormDialog({
         endDate: form.endDate || undefined,
         lastReadDate: form.lastReadDate || undefined,
         rating: Number(form.rating) || 1,
-        importantNotes: form.importantNotes,
         review: form.review,
       });
       onClose();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "কিছু একটা সমস্যা হয়েছে");
+      setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setIsSubmitting(false);
     }
@@ -191,7 +187,7 @@ export function BookFormDialog({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={book ? "বই এডিট করুন" : "নতুন বই যোগ করুন"}
+      title={book ? "Edit Book" : "Add New Book"}
       maxWidth="max-w-2xl"
     >
       <div className="mb-5 flex gap-1 overflow-x-auto border-b border-border">
@@ -219,10 +215,10 @@ export function BookFormDialog({
           </div>
         )}
 
-        {tab === "মূল তথ্য" && (
+        {tab === "Basic Info" && (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="sm:col-span-2">
-              <label className={labelClass}>বইয়ের নাম *</label>
+              <label className={labelClass}>Book Name *</label>
               <input
                 value={form.bookName}
                 onChange={(e) => update("bookName", e.target.value)}
@@ -232,22 +228,22 @@ export function BookFormDialog({
             </div>
             <div className="sm:col-span-2">
               <TagInput
-                label="লেখক(গণ) *"
+                label="Author(s) *"
                 values={form.authorName}
                 onChange={(v) => update("authorName", v)}
-                placeholder="নাম লিখে Enter চাপুন"
+                placeholder="Type a name and press Enter"
               />
             </div>
             <div className="sm:col-span-2">
               <TagInput
-                label="অনুবাদক"
+                label="Translator(s)"
                 values={form.translatorName}
                 onChange={(v) => update("translatorName", v)}
-                placeholder="নাম লিখে Enter চাপুন"
+                placeholder="Type a name and press Enter"
               />
             </div>
             <div>
-              <label className={labelClass}>প্রকাশনী</label>
+              <label className={labelClass}>Publisher</label>
               <input
                 value={form.prokashoni}
                 onChange={(e) => update("prokashoni", e.target.value)}
@@ -255,7 +251,7 @@ export function BookFormDialog({
               />
             </div>
             <div>
-              <label className={labelClass}>সংস্করণ (Edition)</label>
+              <label className={labelClass}>Edition</label>
               <input
                 value={form.edition}
                 onChange={(e) => update("edition", e.target.value)}
@@ -263,7 +259,7 @@ export function BookFormDialog({
               />
             </div>
             <div>
-              <label className={labelClass}>মোট পৃষ্ঠা</label>
+              <label className={labelClass}>Total Pages</label>
               <input
                 type="number"
                 min={0}
@@ -273,7 +269,7 @@ export function BookFormDialog({
               />
             </div>
             <div>
-              <label className={labelClass}>মূল্য (৳)</label>
+              <label className={labelClass}>Price (৳)</label>
               <input
                 type="number"
                 min={0}
@@ -284,19 +280,19 @@ export function BookFormDialog({
             </div>
             <div className="sm:col-span-2">
               <TagInput
-                label="ক্যাটাগরি"
+                label="Categories"
                 values={form.category}
                 onChange={(v) => update("category", v)}
-                placeholder="যেমন: তাফসীর, ফিকহ..."
+                placeholder="e.g. Tafsir, Fiqh..."
               />
             </div>
           </div>
         )}
 
-        {tab === "লিংক ও ফাইল" && (
+        {tab === "Links & Files" && (
           <div className="grid grid-cols-1 gap-4">
             <div>
-              <label className={labelClass}>Google Drive PDF লিংক *</label>
+              <label className={labelClass}>Google Drive PDF Link *</label>
               <input
                 value={form.pdfUrl}
                 onChange={(e) => update("pdfUrl", e.target.value)}
@@ -305,7 +301,7 @@ export function BookFormDialog({
               />
             </div>
             <div>
-              <label className={labelClass}>কভার ইমেজ লিংক</label>
+              <label className={labelClass}>Cover Image URL</label>
               <input
                 value={form.coverImageUrl}
                 onChange={(e) => update("coverImageUrl", e.target.value)}
@@ -314,7 +310,7 @@ export function BookFormDialog({
               />
             </div>
             <div>
-              <label className={labelClass}>ফাইল সাইজ (MB)</label>
+              <label className={labelClass}>File Size (MB)</label>
               <input
                 type="number"
                 min={0}
@@ -324,15 +320,15 @@ export function BookFormDialog({
               />
             </div>
             <TagInput
-              label="অনলাইন কেনার লিংক"
+              label="Buying Links"
               values={form.onlineBuyingLinks}
               onChange={(v) => update("onlineBuyingLinks", v)}
-              placeholder="লিংক দিয়ে Enter চাপুন"
+              placeholder="Paste a link and press Enter"
             />
           </div>
         )}
 
-        {tab === "ট্র্যাকিং" && (
+        {tab === "Tracking" && (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className={labelClass}>Reading Status</label>
@@ -351,7 +347,7 @@ export function BookFormDialog({
               </select>
             </div>
             <div>
-              <label className={labelClass}>রেটিং (১-১০)</label>
+              <label className={labelClass}>Rating (1-10)</label>
               <input
                 type="number"
                 min={1}
@@ -362,7 +358,7 @@ export function BookFormDialog({
               />
             </div>
             <div>
-              <label className={labelClass}>বর্তমানে যে পৃষ্ঠায় আছি</label>
+              <label className={labelClass}>Currently on Page</label>
               <input
                 type="number"
                 min={0}
@@ -372,7 +368,7 @@ export function BookFormDialog({
               />
             </div>
             <div>
-              <label className={labelClass}>মোট কতবার পড়া হয়েছে</label>
+              <label className={labelClass}>Times Read</label>
               <input
                 type="number"
                 min={0}
@@ -382,7 +378,7 @@ export function BookFormDialog({
               />
             </div>
             <div>
-              <label className={labelClass}>শুরুর তারিখ</label>
+              <label className={labelClass}>Start Date</label>
               <input
                 type="date"
                 value={form.startDate}
@@ -391,7 +387,7 @@ export function BookFormDialog({
               />
             </div>
             <div>
-              <label className={labelClass}>শেষ করার তারিখ</label>
+              <label className={labelClass}>Finish Date</label>
               <input
                 type="date"
                 value={form.endDate}
@@ -400,7 +396,7 @@ export function BookFormDialog({
               />
             </div>
             <div>
-              <label className={labelClass}>সর্বশেষ পড়া তারিখ</label>
+              <label className={labelClass}>Last Read Date</label>
               <input
                 type="date"
                 value={form.lastReadDate}
@@ -416,7 +412,7 @@ export function BookFormDialog({
                   onChange={(e) => update("hasBought", e.target.checked)}
                   className="accent-accent"
                 />
-                কিনেছি
+                Purchased
               </label>
               <label className="flex items-center gap-2 text-sm">
                 <input
@@ -425,29 +421,21 @@ export function BookFormDialog({
                   onChange={(e) => update("isFavorite", e.target.checked)}
                   className="accent-accent"
                 />
-                ফেভারিট
+                Favorite
               </label>
             </div>
           </div>
         )}
 
-        {tab === "নোট ও রিভিউ" && (
-          <div className="space-y-4">
-            <TagInput
-              label="গুরুত্বপূর্ণ নোট"
-              values={form.importantNotes}
-              onChange={(v) => update("importantNotes", v)}
-              placeholder="নোট লিখে Enter চাপুন"
+        {tab === "Review" && (
+          <div>
+            <label className={labelClass}>Review</label>
+            <textarea
+              value={form.review}
+              onChange={(e) => update("review", e.target.value)}
+              rows={6}
+              className={inputClass}
             />
-            <div>
-              <label className={labelClass}>রিভিউ</label>
-              <textarea
-                value={form.review}
-                onChange={(e) => update("review", e.target.value)}
-                rows={5}
-                className={inputClass}
-              />
-            </div>
           </div>
         )}
 
@@ -457,14 +445,14 @@ export function BookFormDialog({
             onClick={onClose}
             className="flex-1 rounded-lg border border-border py-2 text-sm font-medium hover:bg-accent/10 transition-colors"
           >
-            বাতিল
+            Cancel
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
             className="flex-1 rounded-lg bg-accent py-2 text-sm font-medium text-white hover:opacity-90 disabled:opacity-50 transition-opacity"
           >
-            {isSubmitting ? "সেভ হচ্ছে..." : book ? "আপডেট করুন" : "যোগ করুন"}
+            {isSubmitting ? "Saving..." : book ? "Update Book" : "Add Book"}
           </button>
         </div>
       </form>

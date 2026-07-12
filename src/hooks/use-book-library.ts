@@ -7,14 +7,18 @@ import type { BookDTO, FolderDTO } from "@/types/book";
 import type { ReadingStatus } from "@/lib/constants/book";
 
 export type ViewMode = "folder" | "raw";
+export type DisplayMode = "grid" | "list";
 
 interface BreadcrumbItem {
   _id: string;
   name: string;
 }
 
+const PREFS_KEY = "books-view-prefs";
+
 export function useBookLibrary() {
-  const [viewMode, setViewMode] = useState<ViewMode>("folder");
+  const [viewMode, setViewModeState] = useState<ViewMode>("folder");
+  const [displayMode, setDisplayModeState] = useState<DisplayMode>("grid");
   const [currentFolderId, setCurrentFolderId] = useState<string | null>(null);
   const [breadcrumb, setBreadcrumb] = useState<BreadcrumbItem[]>([]);
 
@@ -24,10 +28,39 @@ export function useBookLibrary() {
   );
 
   const [folders, setFolders] = useState<FolderDTO[]>([]);
-  const [allFolders, setAllFolders] = useState<FolderDTO[]>([]); // move dialog-এর জন্য flat list
+  const [allFolders, setAllFolders] = useState<FolderDTO[]>([]);
   const [books, setBooks] = useState<BookDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // localStorage থেকে view preferences লোড (mount হওয়ার পর, hydration mismatch এড়াতে)
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(PREFS_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored) as {
+          viewMode?: ViewMode;
+          displayMode?: DisplayMode;
+        };
+        if (parsed.viewMode) setViewModeState(parsed.viewMode);
+        if (parsed.displayMode) setDisplayModeState(parsed.displayMode);
+      }
+    } catch {
+      // ignore malformed localStorage data
+    }
+  }, []);
+
+  const persistPrefs = (
+    next: Partial<{ viewMode: ViewMode; displayMode: DisplayMode }>,
+  ) => {
+    try {
+      const stored = localStorage.getItem(PREFS_KEY);
+      const current = stored ? JSON.parse(stored) : {};
+      localStorage.setItem(PREFS_KEY, JSON.stringify({ ...current, ...next }));
+    } catch {
+      // ignore
+    }
+  };
 
   const fetchAllFolders = useCallback(async () => {
     const res = await fetch("/api/folders");
@@ -67,7 +100,7 @@ export function useBookLibrary() {
         setFolders([]);
       }
     } catch {
-      setError("ডেটা লোড করতে সমস্যা হয়েছে");
+      setError("Failed to load data");
     } finally {
       setIsLoading(false);
     }
@@ -100,11 +133,17 @@ export function useBookLibrary() {
   };
 
   const switchViewMode = (mode: ViewMode) => {
-    setViewMode(mode);
+    setViewModeState(mode);
+    persistPrefs({ viewMode: mode });
     if (mode === "raw") {
       setBreadcrumb([]);
       setCurrentFolderId(null);
     }
+  };
+
+  const switchDisplayMode = (mode: DisplayMode) => {
+    setDisplayModeState(mode);
+    persistPrefs({ displayMode: mode });
   };
 
   // ---- Book mutations ----
@@ -118,7 +157,7 @@ export function useBookLibrary() {
       }),
     });
     if (!res.ok)
-      throw new Error((await res.json()).error ?? "তৈরি করতে সমস্যা হয়েছে");
+      throw new Error((await res.json()).error ?? "Failed to create");
     await fetchData();
   };
 
@@ -129,14 +168,14 @@ export function useBookLibrary() {
       body: JSON.stringify(payload),
     });
     if (!res.ok)
-      throw new Error((await res.json()).error ?? "আপডেট করতে সমস্যা হয়েছে");
+      throw new Error((await res.json()).error ?? "Failed to update");
     await fetchData();
   };
 
   const deleteBook = async (id: string) => {
     const res = await fetch(`/api/books/${id}`, { method: "DELETE" });
     if (!res.ok)
-      throw new Error((await res.json()).error ?? "ডিলিট করতে সমস্যা হয়েছে");
+      throw new Error((await res.json()).error ?? "Failed to delete");
     await fetchData();
   };
 
@@ -152,9 +191,7 @@ export function useBookLibrary() {
       body: JSON.stringify({ ...payload, parentId: currentFolderId }),
     });
     if (!res.ok)
-      throw new Error(
-        (await res.json()).error ?? "ফোল্ডার তৈরি করতে সমস্যা হয়েছে",
-      );
+      throw new Error((await res.json()).error ?? "Failed to create folder");
     await Promise.all([fetchData(), fetchAllFolders()]);
   };
 
@@ -168,24 +205,22 @@ export function useBookLibrary() {
       body: JSON.stringify(payload),
     });
     if (!res.ok)
-      throw new Error(
-        (await res.json()).error ?? "ফোল্ডার আপডেট করতে সমস্যা হয়েছে",
-      );
+      throw new Error((await res.json()).error ?? "Failed to update folder");
     await Promise.all([fetchData(), fetchAllFolders()]);
   };
 
   const deleteFolder = async (id: string) => {
     const res = await fetch(`/api/folders/${id}`, { method: "DELETE" });
     if (!res.ok)
-      throw new Error(
-        (await res.json()).error ?? "ফোল্ডার ডিলিট করতে সমস্যা হয়েছে",
-      );
+      throw new Error((await res.json()).error ?? "Failed to delete folder");
     await Promise.all([fetchData(), fetchAllFolders()]);
   };
 
   return {
     viewMode,
     switchViewMode,
+    displayMode,
+    switchDisplayMode,
     currentFolderId,
     breadcrumb,
     enterFolder,

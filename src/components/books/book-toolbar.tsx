@@ -1,15 +1,25 @@
 // src/components/books/book-toolbar.tsx
 "use client";
 
-import { Search, Plus, FolderPlus, FolderTree, LayoutGrid } from "lucide-react";
+import {
+  Search,
+  Plus,
+  FolderPlus,
+  FolderTree,
+  Files,
+  LayoutGrid,
+  List,
+} from "lucide-react";
 import { READING_STATUS } from "@/lib/constants/book";
 import type { ReadingStatus } from "@/lib/constants/book";
-import type { ViewMode } from "@/hooks/use-book-library";
+import type { ViewMode, DisplayMode } from "@/hooks/use-book-library";
 import { cn } from "@/lib/utils";
 
 interface BookToolbarProps {
   viewMode: ViewMode;
   onViewModeChange: (mode: ViewMode) => void;
+  displayMode: DisplayMode;
+  onDisplayModeChange: (mode: DisplayMode) => void;
   search: string;
   onSearchChange: (v: string) => void;
   statusFilter: ReadingStatus | "all";
@@ -21,6 +31,8 @@ interface BookToolbarProps {
 export function BookToolbar({
   viewMode,
   onViewModeChange,
+  displayMode,
+  onDisplayModeChange,
   search,
   onSearchChange,
   statusFilter,
@@ -39,7 +51,7 @@ export function BookToolbar({
           <input
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="নাম, লেখক বা ক্যাটাগরি দিয়ে খুঁজুন..."
+            placeholder="Search by name, author or category..."
             className="w-full rounded-lg border border-border bg-surface py-2 pl-9 pr-3 text-sm outline-none focus:border-accent transition-colors"
           />
         </div>
@@ -66,7 +78,34 @@ export function BookToolbar({
                   : "text-muted hover:text-foreground",
               )}
             >
-              <LayoutGrid size={14} /> Raw View
+              <Files size={14} /> Raw View
+            </button>
+          </div>
+
+          <div className="flex items-center rounded-lg border border-border bg-surface p-1">
+            <button
+              onClick={() => onDisplayModeChange("grid")}
+              title="Grid view"
+              className={cn(
+                "flex h-7 w-7 items-center justify-center rounded-md transition-colors",
+                displayMode === "grid"
+                  ? "bg-accent text-white"
+                  : "text-muted hover:text-foreground",
+              )}
+            >
+              <LayoutGrid size={14} />
+            </button>
+            <button
+              onClick={() => onDisplayModeChange("list")}
+              title="List view"
+              className={cn(
+                "flex h-7 w-7 items-center justify-center rounded-md transition-colors",
+                displayMode === "list"
+                  ? "bg-accent text-white"
+                  : "text-muted hover:text-foreground",
+              )}
+            >
+              <List size={14} />
             </button>
           </div>
 
@@ -75,7 +114,7 @@ export function BookToolbar({
               onClick={onAddFolder}
               className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-2 text-sm font-medium hover:bg-accent/10 hover:text-accent transition-colors"
             >
-              <FolderPlus size={16} /> ফোল্ডার
+              <FolderPlus size={16} /> Folder
             </button>
           )}
 
@@ -83,7 +122,7 @@ export function BookToolbar({
             onClick={onAddBook}
             className="flex items-center gap-1.5 rounded-lg bg-accent px-3 py-2 text-sm font-medium text-white hover:opacity-90 transition-opacity"
           >
-            <Plus size={16} /> বই যোগ করুন
+            <Plus size={16} /> Add Book
           </button>
         </div>
       </div>
@@ -98,7 +137,7 @@ export function BookToolbar({
               : "border-border text-muted hover:text-foreground",
           )}
         >
-          সব
+          All
         </button>
         {READING_STATUS.map((status) => (
           <button

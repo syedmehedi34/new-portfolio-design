@@ -15,7 +15,7 @@ export function BreadcrumbNav({ items, onNavigate }: BreadcrumbNavProps) {
         onClick={() => onNavigate(-1)}
         className="flex shrink-0 items-center gap-1 rounded-md px-2 py-1 hover:bg-accent/10 hover:text-accent transition-colors"
       >
-        <Home size={14} /> সব ফোল্ডার
+        <Home size={14} /> All Folders
       </button>
       {items.map((item, index) => (
         <div key={item._id} className="flex shrink-0 items-center gap-1.5">

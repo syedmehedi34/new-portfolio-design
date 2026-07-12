@@ -68,7 +68,7 @@ export function FolderCard({
               }}
               className="flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 text-xs hover:bg-accent/10 hover:text-accent transition-colors"
             >
-              <Pencil size={13} /> এডিট
+              <Pencil size={13} /> Edit
             </button>
             <button
               onClick={() => {
@@ -77,7 +77,7 @@ export function FolderCard({
               }}
               className="flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 text-xs text-red-500 hover:bg-red-500/10 transition-colors"
             >
-              <Trash2 size={13} /> ডিলিট
+              <Trash2 size={13} /> Delete
             </button>
           </div>
         )}

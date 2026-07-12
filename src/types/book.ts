@@ -12,6 +12,12 @@ export interface FolderDTO {
   updatedAt: string;
 }
 
+export interface NoteDTO {
+  _id: string;
+  title: string;
+  content: string;
+}
+
 export interface BookDTO {
   _id: string;
   bookName: string;
@@ -37,7 +43,7 @@ export interface BookDTO {
   endDate?: string;
   lastReadDate?: string;
   rating: number;
-  importantNotes: string[];
+  notes: NoteDTO[];
   review: string;
   createdAt: string;
   updatedAt: string;

@@ -17,7 +17,7 @@ export function ConfirmDialog({
   isOpen,
   title,
   description,
-  confirmLabel = "নিশ্চিত করুন",
+  confirmLabel = "Confirm",
   onConfirm,
   onClose,
 }: ConfirmDialogProps) {
@@ -33,7 +33,7 @@ export function ConfirmDialog({
             onClick={onClose}
             className="flex-1 rounded-lg border border-border py-2 text-sm font-medium hover:bg-accent/10 transition-colors"
           >
-            বাতিল
+            Cancel
           </button>
           <button
             onClick={() => {
