@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import authConfig from "./auth.config";
 import dbConnect from "@/lib/mongodb";
 import User from "@/models/user.model";
+import type { UserRole } from "@/models/user.model"; // ⬅️ add this import
 import { loginSchema } from "@/lib/validations/auth";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -32,7 +33,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           name: user.name,
           email: user.email,
           image: user.image,
-          role: user.role, // ← notun addition
+          role: user.role,
         };
       },
     }),
@@ -66,15 +67,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (!user && trigger === "signIn" && !token.role) {
         await dbConnect();
         const dbUser = await User.findOne({ email: token.email });
+        token.id = dbUser?._id?.toString();
         token.role = dbUser?.role ?? "user";
       }
 
       return token;
     },
+
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id;
-        session.user.role = token.role;
+        session.user.id = token.id as string;
+        session.user.role = token.role as UserRole;
       }
       return session;
     },
