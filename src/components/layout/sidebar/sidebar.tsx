@@ -8,6 +8,7 @@ import { useSidebar } from "./sidebar-context";
 import { useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import Image from "next/image";
 
 export function Sidebar() {
   const { isCollapsed } = useSidebar();
@@ -33,10 +34,11 @@ export function Sidebar() {
         )}
       >
         {!isCollapsed && (
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-lg font-semibold tracking-tight truncate">
+          <Link href="/" className="flex items-center gap-2 mt-2.5 ml-6">
+            {/* <span className="text-lg font-semibold tracking-tight truncate">
               Mehedi<span className="text-accent">.</span>
-            </span>
+            </span> */}
+            <Image src="/logo.png" alt="Logo" width={130} height={130} />
           </Link>
         )}
         <SidebarToggle />
