@@ -12,5 +12,3 @@ export const config = {
     "/((?!api|_next/static|_next/image|.*\\.(?:png|jpg|jpeg|svg|ico)$).*)",
   ],
 };
-
-// roll based control need to implement
