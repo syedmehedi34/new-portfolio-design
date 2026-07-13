@@ -117,7 +117,7 @@ export function NotesModal({ isOpen, onClose, book, onSave }: NotesModalProps) {
                         {note.title || "Untitled Note"}
                       </p>
                       <div
-                        className="mt-1 line-clamp-2 text-xs text-muted [&_*]:inline"
+                        className="mt-1 line-clamp-2 text-xs text-muted **:inline"
                         dangerouslySetInnerHTML={{ __html: note.content || "" }}
                       />
                     </button>

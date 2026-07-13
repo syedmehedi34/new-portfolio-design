@@ -70,7 +70,7 @@ export function RichTextEditor({
         onInput={(e) => onChange((e.target as HTMLDivElement).innerHTML)}
         data-placeholder={placeholder}
         className={cn(
-          "min-h-[180px] px-3 py-2.5 text-sm outline-none",
+          "min-h-45 px-3 py-2.5 text-sm outline-none",
           "[&_h3]:mb-1 [&_h3]:mt-1 [&_h3]:text-base [&_h3]:font-semibold",
           "[&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5",
           "empty:before:text-muted empty:before:content-[attr(data-placeholder)]",

@@ -191,7 +191,7 @@ export function BookCard({
 
   return (
     <div className="group flex flex-col overflow-hidden rounded-xl border border-border bg-surface transition-all hover:border-accent/40 hover:shadow-md">
-      <div className="relative aspect-[3/4] w-full bg-accent/5">
+      <div className="relative aspect-3/4 w-full bg-accent/5">
         {cover}
         <button
           onClick={onToggleFavorite}

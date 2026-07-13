@@ -99,7 +99,7 @@ export default function BooksPage() {
               key={i}
               className={
                 lib.displayMode === "grid"
-                  ? "aspect-[3/4] animate-pulse rounded-xl bg-surface"
+                  ? "aspect-3/4 animate-pulse rounded-xl bg-surface"
                   : "h-20 animate-pulse rounded-xl bg-surface"
               }
             />
