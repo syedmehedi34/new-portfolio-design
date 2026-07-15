@@ -15,7 +15,68 @@
   --gold-1: #e3bb6a;
   --gold-2: #b8863a;
   --accent-color: #1b2a4a;
+
+  /* portfolio */
+  /* surfaces */
+  --ink: #0a0f1d;
+  --ink-2: #121a2b;
+
+  /* text */
+  --paper: #e7eaf2;
+  --muted: #8a93a6;
+
+  /* lines / grid */
+  --line: #1e2636;
+  --line-bright: #2b3550;
+
+  /* accents */
+  --amber: #f2a65a;
+  --teal: #4fd1c5;
+
+  /* fonts (Geist Mono is already loaded in layout.tsx) */
+  --font-mono: var(--font-geist-mono);
 }
+
+/*  */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+::selection {
+  background: var(--amber);
+  color: var(--ink);
+}
+
+/* thin, dark scrollbar to match the palette */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-bright);
+  border-radius: 999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/*  */
 
 .dark {
   --background: #0a0d14;
