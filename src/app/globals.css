@@ -10,6 +10,11 @@
   --muted: #6b7280;
   --accent: #5b6bf5;
   --accent-foreground: #ffffff;
+
+  /* logo */
+  --gold-1: #e3bb6a;
+  --gold-2: #b8863a;
+  --accent-color: #1b2a4a;
 }
 
 .dark {
@@ -20,6 +25,11 @@
   --muted: #8b93a7;
   --accent: #5b6bf5;
   --accent-foreground: #ffffff;
+
+  /* logo */
+  --gold-1: #f6d68f;
+  --gold-2: #d9a94e;
+  --accent-color: #f5efe0;
 }
 
 @theme inline {

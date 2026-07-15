@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 180" width="560" height="180">
+  <defs>
+    <style>
+      /* ================================================
+         এখানে কালার পরিবর্তন করুন — পুরো লোগো আপডেট হয়ে যাবে
+         ================================================ */
+      :root {
+        --gold-1: #e3bb6a;    /* গোল্ড গ্রেডিয়েন্ট শুরু (হালকা) */
+        --gold-2: #b8863a;    /* গোল্ড গ্রেডিয়েন্ট শেষ (গাঢ়) */
+        --accent-color: #1b2a4a; /* আন্ডারলাইন / ছোট এক্সেন্ট */
+      }
+    </style>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color: var(--gold-1);"/>
+      <stop offset="100%" style="stop-color: var(--gold-2);"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background: transparent (navbar এর নিজস্ব কালার এর সাথে বসবে) -->
+
+  <!-- Wordmark: Mehedi -->
+  <text x="30" y="115" font-size="92"
+        font-family="'Playfair Display', Georgia, 'Times New Roman', serif"
+        font-style="italic" font-weight="700"
+        fill="url(#textGrad)">Mehedi</text>
+
+  <!-- Elegant tapering underline swoosh -->
+  <path d="M32 130 C 140 153, 340 153, 470 126 C 461 140, 300 162, 150 160 C 88 159, 52 149, 32 130 Z"
+        fill="var(--accent-color)" opacity="0.85"/>
+
+  <!-- Small accent dot at the end of the swoosh -->
+  <circle cx="485" cy="122" r="7" fill="url(#textGrad)"/>
+</svg>

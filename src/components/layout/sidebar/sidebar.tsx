@@ -8,7 +8,9 @@ import { useSidebar } from "./sidebar-context";
 import { useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
+import Logo from "@/components/ui/logo";
+// import Logo from "/logo.png";
 
 export function Sidebar() {
   const { isCollapsed } = useSidebar();
@@ -34,11 +36,12 @@ export function Sidebar() {
         )}
       >
         {!isCollapsed && (
-          <Link href="/" className="flex items-center gap-2 mt-2.5 ml-6">
+          <Link href="/" className="flex items-center gap-2">
             {/* <span className="text-lg font-semibold tracking-tight truncate">
               Mehedi<span className="text-accent">.</span>
             </span> */}
-            <Image src="/logo.png" alt="Logo" width={130} height={130} />
+            {/* <Image src="/Mehedi_logo.svg" alt="Logo" width={135} height={135} /> */}
+            <Logo className="w-35 h-35" />
           </Link>
         )}
         <SidebarToggle />
@@ -56,7 +59,7 @@ export function Sidebar() {
 
       <div className="border-t border-border p-4">
         {!isCollapsed && (
-          <p className="text-xs text-muted truncate">© 2026 Acme Inc.</p>
+          <p className="text-xs text-muted truncate">© Syed Mehedi Hasan.</p>
         )}
       </div>
     </aside>
