@@ -5,7 +5,7 @@ import { Download, Mail, MessageCircle, ArrowDown } from "lucide-react";
 import { FaFacebookF, FaLinkedinIn, FaGithub } from "react-icons/fa";
 
 import Image from "next/image";
-import { PROFILE, RESUME_URL, SOCIALS } from "@/lib/data";
+import { PROFILE, RESUME_URL, SOCIALS } from "@/lib/portfolio/data";
 import { Reveal } from "./reveal";
 
 const ICONS = {

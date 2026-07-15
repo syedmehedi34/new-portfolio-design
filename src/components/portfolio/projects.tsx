@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 
-import projectData from "@/lib/projects-data";
+import projectData from "@/lib/portfolio/projects-data";
 import { Reveal } from "./reveal";
 
 const TECH_LIMIT = 4;

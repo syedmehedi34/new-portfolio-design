@@ -7,19 +7,19 @@ export const NAV_LINKS = [
 ];
 
 export const SOCIALS = [
-  { label: "GitHub", href: "https://github.com/mehedihasan", icon: "github" },
+  { label: "GitHub", href: "https://github.com/syedmehedi34", icon: "github" },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com/in/mehedihasan",
+    href: "https://linkedin.com/in/syedmehedi34",
     icon: "linkedin",
   },
   {
     label: "Facebook",
-    href: "https://facebook.com/mehedihasan",
+    href: "https://facebook.com/syedmehedi34",
     icon: "facebook",
   },
-  { label: "WhatsApp", href: "https://wa.me/8801700000000", icon: "whatsapp" },
-  { label: "Email", href: "mailto:hello@mehedihasan.dev", icon: "email" },
+  { label: "WhatsApp", href: "https://wa.me/8801731771438", icon: "whatsapp" },
+  { label: "Email", href: "mailto:syedmehedi34@gmail.com", icon: "email" },
 ] as const;
 
 export const RESUME_URL = "/resume.pdf";
@@ -50,10 +50,10 @@ export const ABOUT_FACTS = [
 export const CONTACT_INFO = [
   {
     label: "Email",
-    value: "hello@mehedihasan.dev",
-    href: "mailto:hello@mehedihasan.dev",
+    value: "syedmehedi34@gmail.com",
+    href: "mailto:syedmehedi34@gmail.com",
   },
-  { label: "Phone", value: "+880 1700-000000", href: "tel:+8801700000000" },
+  { label: "Phone", value: "+880 1731-771438", href: "tel:+8801731771438" },
   { label: "Location", value: "Dhaka, Bangladesh", href: "" },
 ];
 

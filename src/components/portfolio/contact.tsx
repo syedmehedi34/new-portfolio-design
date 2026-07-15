@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { FaFacebookF, FaLinkedinIn, FaGithub } from "react-icons/fa";
 
-import { CONTACT_INFO, SOCIALS } from "@/lib/data";
+import { CONTACT_INFO, SOCIALS } from "@/lib/portfolio/data";
 import { Reveal } from "./reveal";
 
 const ICONS = {

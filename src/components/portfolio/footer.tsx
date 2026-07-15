@@ -1,8 +1,9 @@
 "use client";
 
 import { Mail, MessageCircle, ArrowUp } from "lucide-react";
-import { NAV_LINKS, PROFILE, SOCIALS } from "@/lib/data";
+import { NAV_LINKS, PROFILE, SOCIALS } from "@/lib/portfolio/data";
 import { FaFacebookF, FaLinkedinIn, FaGithub } from "react-icons/fa";
+import Logo from "../ui/logo";
 
 const ICONS = {
   github: FaGithub,
@@ -20,9 +21,7 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid grid-cols-1 gap-12 pb-14 sm:grid-cols-3">
           <div>
-            <a href="#home" className="font-mono text-sm text-(--paper)">
-              smh<span className="text-(--amber)">.dev</span>
-            </a>
+            <Logo />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
               Building end-to-end web applications with the MERN stack, Next.js,
               and PostgreSQL.

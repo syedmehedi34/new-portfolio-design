@@ -134,7 +134,7 @@ import {
   SiDocker,
   SiGit,
 } from "react-icons/si";
-import { SKILL_GROUPS } from "@/lib/data";
+import { SKILL_GROUPS } from "@/lib/portfolio/data";
 import { Reveal } from "./reveal";
 
 const ICONS: Record<string, IconType> = {

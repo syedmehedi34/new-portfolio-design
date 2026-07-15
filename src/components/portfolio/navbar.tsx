@@ -4,8 +4,8 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Download, Menu, X } from "lucide-react";
-import { NAV_LINKS, RESUME_URL } from "@/lib/data";
-import Logo from "./ui/logo";
+import { NAV_LINKS, RESUME_URL } from "@/lib/portfolio/data";
+import Logo from "../ui/logo";
 // import { Logo } from "./logo";
 
 export function Navbar() {

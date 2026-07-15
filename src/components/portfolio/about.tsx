@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
-import { ABOUT_FACTS, ABOUT_STATS } from "@/lib/data";
+import { ABOUT_FACTS, ABOUT_STATS } from "@/lib/portfolio/data";
 import { Reveal } from "./reveal";
+// import { Reveal } from "../reveal";
 
 function Counter({ value, suffix }: { value: number; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null);
