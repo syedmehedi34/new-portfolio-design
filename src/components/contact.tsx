@@ -180,7 +180,7 @@ export function Contact() {
                 Send Message
               </button>
               {sent && (
-                <p className="mt-3 font-[family-name:var(--font-mono)] text-xs text-[var(--teal)]">
+                <p className="mt-3 font-mono text-xs text-(--teal)">
                   Opening your email client — send it off to reach me.
                 </p>
               )}
