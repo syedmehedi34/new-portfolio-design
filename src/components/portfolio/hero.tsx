@@ -162,7 +162,9 @@ export function Hero() {
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <a
                 href={RESUME_URL}
-                download
+                // download
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 rounded-lg bg-(--amber) px-5 py-3 text-sm font-medium text-(--ink) transition-transform hover:-translate-y-0.5"
               >
                 <Download

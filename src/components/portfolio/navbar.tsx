@@ -93,7 +93,9 @@ export function Navbar() {
           <div className="flex items-center gap-2">
             <a
               href={RESUME_URL}
-              download
+              target="_blank"
+              rel="noopener noreferrer"
+              // download
               className="hidden items-center gap-2 rounded-lg bg-(--amber) px-4 py-2 text-[13px] font-medium text-(--ink) transition-transform hover:-translate-y-0.5 active:translate-y-0 md:inline-flex"
             >
               <Download size={14} strokeWidth={2.5} />
@@ -132,7 +134,9 @@ export function Navbar() {
             ))}
             <a
               href={RESUME_URL}
-              download
+              target="_blank"
+              rel="noopener noreferrer"
+              // download
               className="mt-1 flex items-center justify-center gap-2 rounded-lg bg-(--amber) px-4 py-2.5 text-sm font-medium text-(--ink)"
             >
               <Download size={14} strokeWidth={2.5} />

@@ -36,13 +36,13 @@ export function Sidebar() {
         )}
       >
         {!isCollapsed && (
-          <Link href="/" className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
             {/* <span className="text-lg font-semibold tracking-tight truncate">
               Mehedi<span className="text-accent">.</span>
             </span> */}
             {/* <Image src="/Mehedi_logo.svg" alt="Logo" width={135} height={135} /> */}
             <Logo variant="light" />
-          </Link>
+          </div>
         )}
         <SidebarToggle />
       </div>

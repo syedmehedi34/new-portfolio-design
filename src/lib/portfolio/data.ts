@@ -15,14 +15,15 @@ export const SOCIALS = [
   },
   {
     label: "Facebook",
-    href: "https://facebook.com/syedmehedi34",
+    href: "https://facebook.com/syedmehedi0313",
     icon: "facebook",
   },
   { label: "WhatsApp", href: "https://wa.me/8801731771438", icon: "whatsapp" },
   { label: "Email", href: "mailto:syedmehedi34@gmail.com", icon: "email" },
 ] as const;
 
-export const RESUME_URL = "/resume.pdf";
+export const RESUME_URL =
+  "https://drive.google.com/file/d/1meZg3OXn1xQqPW-P0qVRqGAy3iXXO5tl/view?usp=drive_link";
 
 export const PROFILE = {
   name: "Syed Mehedi Hasan",
@@ -30,7 +31,7 @@ export const PROFILE = {
   location: "Dhaka, Bangladesh",
   tagline:
     "I design and ship reliable web applications end to end — from a normalized Postgres schema to a pixel-tight React interface.",
-  avatar: "/avatar.jpg",
+  avatar: "/portfolio/my-photo.jpeg",
 };
 
 export const ABOUT_STATS = [
