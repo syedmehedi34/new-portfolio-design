@@ -1,9 +1,8 @@
 "use client";
 
 import { Mail, MessageCircle, ArrowUp } from "lucide-react";
-import { FaFacebookF, FaLinkedinIn, FaGithub } from "react-icons/fa";
-
 import { NAV_LINKS, PROFILE, SOCIALS } from "@/lib/data";
+import { FaFacebookF, FaLinkedinIn, FaGithub } from "react-icons/fa";
 
 const ICONS = {
   github: FaGithub,
@@ -17,10 +16,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer
-      id="contact"
-      className="relative border-t border-(--line) bg-(--ink) pt-20"
-    >
+    <footer className="relative border-t border-(--line) bg-(--ink) pt-20">
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid grid-cols-1 gap-12 pb-14 sm:grid-cols-3">
           <div>

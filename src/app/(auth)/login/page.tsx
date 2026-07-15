@@ -1,6 +1,4 @@
 // src/app/(auth)/login/page.tsx
-
-import Image from "next/image";
 import Link from "next/link";
 
 import { LoginForm } from "@/components/auth/login-form";
@@ -14,9 +12,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md space-y-8 ">
         {/* Logo */}
         <div className="flex flex-col items-center text-center">
-          <Link href="/">
-            <Logo className="w-50" />
-          </Link>
+          <Logo variant="light" />
         </div>
 
         {/* Card */}

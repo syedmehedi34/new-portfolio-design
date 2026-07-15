@@ -41,7 +41,7 @@ export function Sidebar() {
               Mehedi<span className="text-accent">.</span>
             </span> */}
             {/* <Image src="/Mehedi_logo.svg" alt="Logo" width={135} height={135} /> */}
-            <Logo className="w-35 h-35" />
+            <Logo variant="light" />
           </Link>
         )}
         <SidebarToggle />

@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Download, Menu, X } from "lucide-react";
 import { NAV_LINKS, RESUME_URL } from "@/lib/data";
+import Logo from "./ui/logo";
+// import { Logo } from "./logo";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -12,7 +14,17 @@ export function Navbar() {
   const [active, setActive] = useState("#home");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 12);
+
+      // near the bottom of the page: the last section can't reach the
+      // observer's center band because there's no more room to scroll,
+      // so force it active manually.
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 4;
+      if (atBottom) setActive(NAV_LINKS[NAV_LINKS.length - 1].href);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -51,14 +63,7 @@ export function Navbar() {
           }`}
         >
           {/* logo mark */}
-          <a href="#home" className="group flex items-center gap-2 font-mono">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-(--line) bg-(--ink) text-sm text-(--amber) transition-colors group-hover:border-(--amber)/50">
-              {"<"}/{">"}
-            </span>
-            <span className="text-sm tracking-wide text-(--paper)">
-              smh<span className="text-(--amber)">.dev</span>
-            </span>
-          </a>
+          <Logo variant="dark" />
 
           {/* desktop nav */}
           <nav className="hidden items-center gap-1 md:flex">
