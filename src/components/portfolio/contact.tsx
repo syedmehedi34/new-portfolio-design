@@ -1,15 +1,13 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { Mail, Send } from "lucide-react";
 import {
-  //   Github,
-  //   Linkedin,
-  //   Facebook,
-  Mail,
-  MessageCircle,
-  Send,
-} from "lucide-react";
-import { FaFacebookF, FaLinkedinIn, FaGithub } from "react-icons/fa";
+  FaFacebookF,
+  FaLinkedinIn,
+  FaGithub,
+  FaWhatsapp,
+} from "react-icons/fa";
 
 import { CONTACT_INFO, SOCIALS } from "@/lib/portfolio/data";
 import { Reveal } from "./reveal";
@@ -18,7 +16,7 @@ const ICONS = {
   github: FaGithub,
   linkedin: FaLinkedinIn,
   facebook: FaFacebookF,
-  whatsapp: MessageCircle,
+  whatsapp: FaWhatsapp,
   email: Mail,
 } as const;
 

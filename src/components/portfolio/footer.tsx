@@ -1,15 +1,20 @@
 "use client";
 
-import { Mail, MessageCircle, ArrowUp } from "lucide-react";
+import { Mail, ArrowUp } from "lucide-react";
 import { NAV_LINKS, PROFILE, SOCIALS } from "@/lib/portfolio/data";
-import { FaFacebookF, FaLinkedinIn, FaGithub } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaLinkedinIn,
+  FaGithub,
+  FaWhatsapp,
+} from "react-icons/fa";
 import Logo from "../ui/logo";
 
 const ICONS = {
   github: FaGithub,
   linkedin: FaLinkedinIn,
   facebook: FaFacebookF,
-  whatsapp: MessageCircle,
+  whatsapp: FaWhatsapp,
   email: Mail,
 } as const;
 

@@ -1,8 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Download, Mail, MessageCircle, ArrowDown } from "lucide-react";
-import { FaFacebookF, FaLinkedinIn, FaGithub } from "react-icons/fa";
+import { Download, Mail, ArrowDown } from "lucide-react";
+import {
+  FaFacebookF,
+  FaLinkedinIn,
+  FaGithub,
+  FaWhatsapp,
+} from "react-icons/fa";
 
 import Image from "next/image";
 import { PROFILE, RESUME_URL, SOCIALS } from "@/lib/portfolio/data";
@@ -12,7 +17,7 @@ const ICONS = {
   github: FaGithub,
   linkedin: FaLinkedinIn,
   facebook: FaFacebookF,
-  whatsapp: MessageCircle,
+  whatsapp: FaWhatsapp,
   email: Mail,
 } as const;
 
