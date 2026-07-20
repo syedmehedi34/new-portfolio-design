@@ -1,3 +1,4 @@
+// src/lib/portfolio/projects-data.ts
 export type Project = {
   id: string;
   title: string;

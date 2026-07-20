@@ -1,3 +1,4 @@
+// src/components/portfolio/hero.tsx
 "use client";
 
 import { motion } from "framer-motion";
